@@ -25,15 +25,24 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
+import store from "./store/store";
+import { Provider } from "react-redux";
+import { AuthKeycloakProvider } from "utils/AuthKeycloak";
+// import { useKeycloak } from "@react-keycloak/web";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+// const { keycloak } = useKeycloak();
 
 root.render(
+  <Provider store={store}>
   <BrowserRouter>
-    <Routes>
+  <AuthKeycloakProvider>
+  <Routes>
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/auth/*" element={<AuthLayout />} />
       <Route path="*" element={<Navigate to="/admin/index" replace />} />
     </Routes>
+  </AuthKeycloakProvider>
   </BrowserRouter>
+  </Provider>
 );
